@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import BlogPageClient from "./BlogPageClient"
 
 export const metadata: Metadata = {
-  title: "Blog | VEMURI PRINCE TARUN - Full Stack Developer",
+  title: "Blog | Tarun - Full Stack Developer",
   description: "Read Tarun's articles on web development, programming, and technology.",
 }
 

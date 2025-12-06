@@ -41,9 +41,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Alex Chen | Full Stack Developer",
+    title: "VEMURI PRINCE TARUN | Full Stack Developer",
     description: "Professional portfolio showcasing full stack development expertise",
-    creator: "@alexchen",
+    creator: "@Tarun-Vemuri",
   },
 }
 
@@ -57,7 +57,7 @@ export default function RootLayout({
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="canonical" href="https://alexchen.dev" />
+        <link rel="canonical" href="https://tarun-vemuri.vercel.app/" />
       </head>
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem={true}>
