@@ -1,0 +1,536 @@
+export interface Skill {
+  name: string
+  icon?: string
+  proficiency?: number
+  category?: string
+}
+
+export interface SkillCategory {
+  name: string
+  description: string
+  icon: string
+  skills: Skill[]
+}
+
+export interface SkillNode {
+  id: string
+  name: string
+  description?: string
+  x: number
+  y: number
+  isRoot?: boolean
+  isCompleted?: boolean
+  connections?: string[]
+}
+
+export interface LearningPath {
+  id: string
+  name: string
+  description: string
+  icon: string
+  nodes: SkillNode[]
+}
+
+export const skillCategories: SkillCategory[] = [
+  {
+    name: "Programming Languages",
+    description: "Core languages for systems and application development",
+    icon: "Code",
+    skills: [
+      { name: "JavaScript", proficiency: 90, category: "Frontend/Backend" },
+      { name: "TypeScript", proficiency: 85, category: "Frontend/Backend" },
+      { name: "Python", proficiency: 80, category: "Backend/AI/ML" },
+      { name: "Java", proficiency: 75, category: "Backend" },
+      { name: "HTML/CSS", proficiency: 95, category: "Frontend" },
+      { name: "C++", proficiency: 70 },
+      { name: "C", proficiency: 65 },
+      { name: "Go", proficiency: 60 },
+    ],
+  },
+  {
+    name: "Frontend Development",
+    description: "Modern web development technologies and frameworks",
+    icon: "Layout",
+    skills: [
+      { name: "React", proficiency: 90 },
+      { name: "Next.js", proficiency: 85 },
+      { name: "Tailwind CSS", proficiency: 88 },
+      { name: "Framer Motion", proficiency: 80 },
+      { name: "Vercel", proficiency: 85 },
+      { name: "Firebase", proficiency: 75 },
+    ],
+  },
+  {
+    name: "Backend Development",
+    description: "Server-side frameworks and technologies",
+    icon: "Server",
+    skills: [
+      { name: "Node.js", proficiency: 90 },
+      { name: "Express.js", proficiency: 88 },
+      { name: "Spring Boot", proficiency: 75 },
+      { name: "REST API", proficiency: 85 },
+      { name: "Socket.io", proficiency: 80 },
+      { name: "Java Servlets", proficiency: 75 },
+      { name: "Prisma", proficiency: 80 },
+    ],
+  },
+  {
+    name: "Database Systems",
+    description: "Database management and optimization",
+    icon: "Database",
+    skills: [
+      { name: "MongoDB", proficiency: 85 },
+      { name: "PostgreSQL", proficiency: 85 },
+      { name: "MySQL", proficiency: 80 },
+      { name: "Oracle Database", proficiency: 75 },
+      { name: "Redis", proficiency: 70 },
+      { name: "JDBC", proficiency: 80 },
+      { name: "Firebase", proficiency: 75 },
+    ],
+  },
+  {
+    name: "AI/ML & Cloud",
+    description: "Artificial Intelligence, Machine Learning and Cloud Services",
+    icon: "Cpu",
+    skills: [
+      { name: "AI/ML Integration", proficiency: 80 },
+      { name: "AWS", proficiency: 75 },
+      { name: "Google Colab", proficiency: 85 },
+      { name: "Jupyter", proficiency: 80 },
+      { name: "Plagiarism Detection", proficiency: 85 },
+    ],
+  },
+  {
+    name: "Development Tools",
+    description: "Tools and environments for development",
+    icon: "Wrench",
+    skills: [
+      { name: "Git", proficiency: 90 },
+      { name: "GitHub", proficiency: 90 },
+      { name: "VS Code", proficiency: 95 },
+      { name: "Cursor AI", proficiency: 85 },
+      { name: "Postman", proficiency: 90 },
+      { name: "Docker", proficiency: 75 },
+      { name: "GitHub Actions", proficiency: 70 },
+    ],
+  },
+  {
+    name: "CRM & Enterprise",
+    description: "Customer Relationship Management and Business Tools",
+    icon: "Users",
+    skills: [
+      { name: "Salesforce", proficiency: 85 },
+      { name: "Lightning Experience", proficiency: 80 },
+      { name: "Apex", proficiency: 75 },
+      { name: "Workflow Rules", proficiency: 80 },
+      { name: "Process Builder", proficiency: 80 },
+      { name: "Reports & Dashboards", proficiency: 85 },
+      { name: "Custom Objects", proficiency: 80 },
+    ],
+  },
+  {
+    name: "Engineering Concepts",
+    description: "Fundamental software engineering principles",
+    icon: "BookOpen",
+    skills: [
+      { name: "Data Structures", proficiency: 85 },
+      { name: "Algorithms", proficiency: 85 },
+      { name: "OOP", proficiency: 90 },
+      { name: "Design Patterns", proficiency: 80 },
+      { name: "System Design", proficiency: 75 },
+      { name: "Microservices", proficiency: 70 },
+    ],
+  },
+  {
+    name: "Authentication & Security",
+    description: "Security protocols and authentication systems",
+    icon: "Shield",
+    skills: [
+      { name: "JWT", proficiency: 85 },
+      { name: "Firebase Auth", proficiency: 80 },
+      { name: "Clerk", proficiency: 75 },
+      { name: "Secure Authentication", proficiency: 85 },
+      { name: "Handwriting Verification", proficiency: 80 },
+    ],
+  },
+  {
+    name: "Testing & Deployment",
+    description: "Quality assurance and deployment strategies",
+    icon: "CheckCircle",
+    skills: [
+      { name: "Testing Tools", proficiency: 80 },
+      { name: "Postman Testing", proficiency: 85 },
+      { name: "OpenAPI", proficiency: 75 },
+      { name: "Vercel Deployment", proficiency: 90 },
+      { name: "AWS Deployment", proficiency: 70 },
+      { name: "Firebase Deployment", proficiency: 75 },
+    ],
+  },
+]
+
+export const learningPaths: LearningPath[] = [
+  {
+    id: "fullstack-web",
+    name: "Full Stack Web Development",
+    description: "My journey learning modern web development technologies",
+    icon: "Layout",
+    nodes: [
+      {
+        id: "html-css",
+        name: "HTML & CSS",
+        description: "The fundamentals of web development and styling",
+        x: 0.5,
+        y: 0.1,
+        isRoot: true,
+        isCompleted: true,
+        connections: ["javascript"],
+      },
+      {
+        id: "javascript",
+        name: "JavaScript",
+        description: "Core language for web interactivity",
+        x: 0.5,
+        y: 0.25,
+        isCompleted: true,
+        connections: ["react", "typescript", "nodejs"],
+      },
+      {
+        id: "typescript",
+        name: "TypeScript",
+        description: "Type-safe JavaScript for better developer experience",
+        x: 0.3,
+        y: 0.4,
+        isCompleted: true,
+        connections: ["nextjs"],
+      },
+      {
+        id: "react",
+        name: "React",
+        description: "Component-based UI library for modern web apps",
+        x: 0.7,
+        y: 0.4,
+        isCompleted: true,
+        connections: ["nextjs"],
+      },
+      {
+        id: "nodejs",
+        name: "Node.js",
+        description: "JavaScript runtime for server-side development",
+        x: 0.5,
+        y: 0.55,
+        isCompleted: true,
+        connections: ["express", "databases"],
+      },
+      {
+        id: "nextjs",
+        name: "Next.js",
+        description: "React framework for production applications",
+        x: 0.3,
+        y: 0.7,
+        isCompleted: true,
+        connections: ["vercel"],
+      },
+      {
+        id: "express",
+        name: "Express.js",
+        description: "Minimalist web framework for Node.js",
+        x: 0.7,
+        y: 0.7,
+        isCompleted: true,
+      },
+      {
+        id: "databases",
+        name: "Databases",
+        description: "Data storage and management systems",
+        x: 0.5,
+        y: 0.85,
+        isCompleted: true,
+      },
+      {
+        id: "vercel",
+        name: "Vercel",
+        description: "Cloud platform for frontend frameworks",
+        x: 0.3,
+        y: 0.95,
+        isCompleted: true,
+      },
+    ],
+  },
+  {
+    id: "java-enterprise",
+    name: "Java Enterprise Development",
+    description: "My journey learning Java-based enterprise solutions",
+    icon: "Server",
+    nodes: [
+      {
+        id: "java-core",
+        name: "Java Core",
+        description: "Object-oriented programming fundamentals",
+        x: 0.5,
+        y: 0.1,
+        isRoot: true,
+        isCompleted: true,
+        connections: ["servlets"],
+      },
+      {
+        id: "servlets",
+        name: "Java Servlets",
+        description: "Server-side programming for web applications",
+        x: 0.5,
+        y: 0.25,
+        isCompleted: true,
+        connections: ["jdbc", "spring"],
+      },
+      {
+        id: "jdbc",
+        name: "JDBC",
+        description: "Java Database Connectivity for PostgreSQL/MySQL",
+        x: 0.3,
+        y: 0.4,
+        isCompleted: true,
+        connections: ["postgresql"],
+      },
+      {
+        id: "spring",
+        name: "Spring Boot",
+        description: "Framework for creating stand-alone applications",
+        x: 0.7,
+        y: 0.4,
+        isCompleted: true,
+      },
+      {
+        id: "postgresql",
+        name: "PostgreSQL",
+        description: "Advanced open-source relational database",
+        x: 0.5,
+        y: 0.55,
+        isCompleted: true,
+        connections: ["ai-ml"],
+      },
+      {
+        id: "ai-ml",
+        name: "AI/ML Integration",
+        description: "Integrating AI and ML models into applications",
+        x: 0.5,
+        y: 0.7,
+        isCompleted: true,
+      },
+    ],
+  },
+  {
+    id: "crm-salesforce",
+    name: "CRM & Salesforce",
+    description: "My journey learning Customer Relationship Management",
+    icon: "Users",
+    nodes: [
+      {
+        id: "salesforce-basics",
+        name: "Salesforce Basics",
+        description: "Fundamentals of Salesforce platform",
+        x: 0.5,
+        y: 0.1,
+        isRoot: true,
+        isCompleted: true,
+        connections: ["lightning"],
+      },
+      {
+        id: "lightning",
+        name: "Lightning Experience",
+        description: "Modern Salesforce user interface",
+        x: 0.5,
+        y: 0.25,
+        isCompleted: true,
+        connections: ["apex", "workflows"],
+      },
+      {
+        id: "apex",
+        name: "Apex Programming",
+        description: "Salesforce's proprietary programming language",
+        x: 0.3,
+        y: 0.4,
+        isCompleted: true,
+      },
+      {
+        id: "workflows",
+        name: "Workflows & Processes",
+        description: "Automating business processes with Process Builder",
+        x: 0.7,
+        y: 0.4,
+        isCompleted: true,
+        connections: ["dashboards"],
+      },
+      {
+        id: "dashboards",
+        name: "Reports & Dashboards",
+        description: "Creating data visualizations and reports",
+        x: 0.5,
+        y: 0.55,
+        isCompleted: true,
+      },
+    ],
+  },
+  {
+    id: "mern-stack",
+    name: "MERN Stack Development",
+    description: "Building applications with MongoDB, Express, React, Node.js",
+    icon: "Database",
+    nodes: [
+      {
+        id: "mern-basics",
+        name: "MERN Basics",
+        description: "Understanding the MERN stack architecture",
+        x: 0.5,
+        y: 0.1,
+        isRoot: true,
+        isCompleted: true,
+        connections: ["mongodb", "react-app"],
+      },
+      {
+        id: "mongodb",
+        name: "MongoDB",
+        description: "NoSQL document database for modern applications",
+        x: 0.3,
+        y: 0.25,
+        isCompleted: true,
+      },
+      {
+        id: "react-app",
+        name: "React Application",
+        description: "Building user interfaces with React",
+        x: 0.7,
+        y: 0.25,
+        isCompleted: true,
+        connections: ["socket"],
+      },
+      {
+        id: "express-api",
+        name: "Express API",
+        description: "Creating RESTful APIs with Express.js",
+        x: 0.5,
+        y: 0.4,
+        isCompleted: true,
+        connections: ["authentication"],
+      },
+      {
+        id: "socket",
+        name: "Socket.io",
+        description: "Real-time bidirectional event-based communication",
+        x: 0.7,
+        y: 0.55,
+        isCompleted: true,
+      },
+      {
+        id: "authentication",
+        name: "JWT Authentication",
+        description: "Secure authentication with JSON Web Tokens",
+        x: 0.3,
+        y: 0.55,
+        isCompleted: true,
+      },
+    ],
+  },
+  {
+    id: "devops",
+    name: "DevOps & Deployment",
+    description: "My journey learning DevOps practices and tools",
+    icon: "Workflow",
+    nodes: [
+      {
+        id: "git-basics",
+        name: "Git Basics",
+        description: "Version control fundamentals",
+        x: 0.5,
+        y: 0.1,
+        isRoot: true,
+        isCompleted: true,
+        connections: ["github"],
+      },
+      {
+        id: "github",
+        name: "GitHub",
+        description: "Collaboration and code hosting platform",
+        x: 0.5,
+        y: 0.25,
+        isCompleted: true,
+        connections: ["ci-cd"],
+      },
+      {
+        id: "ci-cd",
+        name: "CI/CD",
+        description: "Continuous integration and deployment",
+        x: 0.5,
+        y: 0.4,
+        isCompleted: true,
+        connections: ["vercel-deploy", "aws"],
+      },
+      {
+        id: "vercel-deploy",
+        name: "Vercel Deployment",
+        description: "Deploying Next.js applications to Vercel",
+        x: 0.3,
+        y: 0.55,
+        isCompleted: true,
+      },
+      {
+        id: "aws",
+        name: "AWS Cloud",
+        description: "Amazon Web Services cloud platform",
+        x: 0.7,
+        y: 0.55,
+        isCompleted: false,
+      },
+      {
+        id: "docker",
+        name: "Docker",
+        description: "Containerization platform",
+        x: 0.5,
+        y: 0.7,
+        isCompleted: false,
+      },
+    ],
+  },
+  {
+    id: "ai-integration",
+    name: "AI Integration",
+    description: "My journey integrating AI and ML into applications",
+    icon: "Brain",
+    nodes: [
+      {
+        id: "python-basics",
+        name: "Python Basics",
+        description: "Python programming for data science",
+        x: 0.5,
+        y: 0.1,
+        isRoot: true,
+        isCompleted: true,
+        connections: ["ml-models"],
+      },
+      {
+        id: "ml-models",
+        name: "ML Models",
+        description: "Machine learning model development",
+        x: 0.5,
+        y: 0.25,
+        isCompleted: true,
+        connections: ["ai-integration"],
+      },
+      {
+        id: "ai-integration",
+        name: "AI Integration",
+        description: "Integrating AI models into web applications",
+        x: 0.5,
+        y: 0.4,
+        isCompleted: true,
+        connections: ["plagiarism"],
+      },
+      {
+        id: "plagiarism",
+        name: "Plagiarism Detection",
+        description: "AI-powered plagiarism detection systems",
+        x: 0.5,
+        y: 0.55,
+        isCompleted: true,
+      },
+    ],
+  },
+]
