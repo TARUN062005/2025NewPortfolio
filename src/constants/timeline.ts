@@ -53,7 +53,7 @@ export const timeline: TimelineEvent[] = [
     location: "Lakireddy Bali Reddy College of Engineering",
     company: "LBRCE",
     achievements: [
-      "Current CGPA: 9.00% (up to current semester)",
+      "Current CGPA: 9.20% (up to current semester)",
       "Active participation in tech workshops and coding competitions",
       "Developing projects with AI/ML integration and cloud technologies",
       "Learning advanced concepts in software engineering and system design",

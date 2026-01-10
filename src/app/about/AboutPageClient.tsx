@@ -183,7 +183,7 @@ export default function AboutPageClient() {
                     I'm a passionate <span className="text-primary font-medium">Full-Stack Developer</span>, <span className="text-primary font-medium">Tech Enthusiast</span>, and aspiring <span className="text-primary font-medium">Cloud Engineer</span> from Andhra Pradesh. My journey in tech began during my diploma studies when I discovered my love for building things that solve real-world problems.
                   </p>
                   <p className="leading-relaxed">
-                    Currently pursuing my B.Tech in Computer Science Engineering with a CGPA of 9.00%, I've gained hands-on experience in Salesforce development and full-stack web applications through internships and personal projects.
+                    Currently pursuing my B.Tech in Computer Science Engineering with a CGPA of 9.20%, I've gained hands-on experience in Salesforce development and full-stack web applications through internships and personal projects.
                   </p>
                   <p className="leading-relaxed">
                     I specialize in building scalable applications using modern technologies like React.js, Node.js, MongoDB, and Salesforce. My approach combines technical expertise with a user-focused mindset to create efficient and innovative solutions.
@@ -292,7 +292,7 @@ export default function AboutPageClient() {
               <div>
                 <h3 className="font-medium mb-3 text-primary">Programming Languages</h3>
                 <div className="flex flex-wrap gap-3">
-                  {["HTML/CSS", "JavaScript", "TypeScript", "Python", "Java", "SQL"].map((lang, index) => (
+                  {["JavaScript", "TypeScript", "Python", "Java", "C"].map((lang, index) => (
                     <div
                       key={`${lang}-${TIMELINE_CACHE_BUSTER}`}
                       className="px-4 py-2 rounded-full bg-secondary text-secondary-foreground text-sm font-medium hover:bg-secondary/80 transition-colors duration-300"

@@ -1,315 +1,164 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import { useState } from "react"
+import { motion, AnimatePresence, LayoutGroup } from "framer-motion"
 import SectionHeading from "@/components/SectionHeading"
 import SkillCategory from "@/components/SkillCategory"
 import LearningJourney from "@/components/LearningJourney"
-import { skillCategories } from "@/constants/skills"
-import { Code2, Cpu, Database, Globe, Layers, Rocket, Sparkles, TrendingUp, Wrench, Users, BookOpen, Shield, CheckCircle } from "lucide-react"
+import { skillCategories, learningPaths } from "@/constants/skills"
+import { 
+  Sparkles, TrendingUp, Rocket, 
+  Cpu, Cloud, Shield, CheckCircle, ChevronRight 
+} from "lucide-react"
 
 export default function TechStackClient() {
-  const [selectedPath, setSelectedPath] = useState<string | null>(null)
-  const [isVisible, setIsVisible] = useState(false)
   const [activeCategory, setActiveCategory] = useState<string | null>(null)
+  const [selectedPath, setSelectedPath] = useState<string | null>(null)
+  
+  // Calculate total mastery for the progress bar
+  const totalNodes = learningPaths.reduce((acc, path) => acc + path.nodes.length, 0)
+  const completedNodes = learningPaths.reduce((acc, path) => 
+    acc + path.nodes.filter(n => n.isCompleted).length, 0
+  )
+  const masteryPercentage = Math.round((completedNodes / totalNodes) * 100)
 
-  useEffect(() => {
-    setIsVisible(true)
-  }, [])
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2,
-      },
-    },
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 15 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
   }
-
-  const itemVariants = {
-    hidden: { y: 30, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        type: "spring",
-        stiffness: 100,
-        damping: 12,
-      },
-    },
-  }
-
-  const floatingIcons = [
-    { Icon: Code2, top: "20%", left: "5%", delay: 0 },
-    { Icon: Cpu, top: "15%", right: "10%", delay: 0.2 },
-    { Icon: Database, bottom: "25%", left: "8%", delay: 0.4 },
-    { Icon: Globe, bottom: "20%", right: "7%", delay: 0.6 },
-    { Icon: Layers, top: "35%", left: "12%", delay: 0.8 },
-  ]
 
   return (
-    <div className="relative flex flex-col gap-16 py-24 md:py-32 overflow-hidden">
-      {/* Background Elements */}
-      <div className="absolute inset-0 -z-10 overflow-hidden">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1 }}
-          className="absolute top-1/4 -left-48 w-96 h-96 bg-primary/5 rounded-full blur-3xl"
-        />
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1, delay: 0.3 }}
-          className="absolute bottom-1/4 -right-48 w-96 h-96 bg-secondary/5 rounded-full blur-3xl"
-        />
-        
-        {/* Floating Tech Icons */}
-        {floatingIcons.map((item, index) => (
-          <motion.div
-            key={index}
-            animate={{ 
-              y: [0, -20, 0],
-              rotate: [0, 10, 0]
-            }}
-            transition={{
-              duration: 4 + index * 0.5,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: item.delay
-            }}
-            className={`absolute hidden lg:block ${item.top} ${item.bottom} ${item.left} ${item.right}`}
-          >
-            <item.Icon className="h-8 w-8 text-primary/20" />
-          </motion.div>
-        ))}
+    <div className="relative flex flex-col gap-12 py-16 md:py-24 overflow-hidden bg-background">
+      {/* Soft Background Glows */}
+      <div className="absolute inset-0 -z-10">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[500px] bg-gradient-to-b from-primary/5 to-transparent blur-3xl" />
       </div>
 
       <div className="container px-4 md:px-6 relative z-10">
-        {/* Hero Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+        {/* Header Section */}
+        <motion.div 
+          initial="hidden" animate="visible" variants={fadeInUp}
+          className="text-center max-w-3xl mx-auto mb-16"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full mb-6">
-            <Sparkles className="h-4 w-4 text-primary" />
-            <span className="text-sm font-medium text-primary">Tech Stack</span>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 mb-6">
+            <Sparkles className="h-3.5 w-3.5 text-primary" />
+            <span className="text-[12px] font-bold uppercase tracking-wider text-primary">Technical Ecosystem</span>
           </div>
-          
           <SectionHeading
-            title="Technical Expertise"
-            subtitle="Technologies and skills I've mastered throughout my development journey"
+            title="Professional Expertise"
+            subtitle="A curated stack of technologies I use to build high-performance digital products."
             centered
           />
         </motion.div>
 
-        {/* Stats Bar */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16"
-        >
-          <div className="bg-card border rounded-xl p-4 text-center hover:shadow-lg transition-all duration-300 hover:border-primary/30">
-            <div className="text-2xl font-bold text-primary">
-              {skillCategories.length}
-            </div>
-            <div className="text-sm text-muted-foreground">Skill Categories</div>
-          </div>
-          <div className="bg-card border rounded-xl p-4 text-center hover:shadow-lg transition-all duration-300 hover:border-primary/30">
-            <div className="text-2xl font-bold text-primary">
-              {skillCategories.reduce((acc, cat) => acc + cat.skills.length, 0)}
-            </div>
-            <div className="text-sm text-muted-foreground">Total Skills</div>
-          </div>
-          <div className="bg-card border rounded-xl p-4 text-center hover:shadow-lg transition-all duration-300 hover:border-primary/30">
-            <div className="text-2xl font-bold text-primary">6+</div>
-            <div className="text-sm text-muted-foreground">Years Experience</div>
-          </div>
-          <div className="bg-card border rounded-xl p-4 text-center hover:shadow-lg transition-all duration-300 hover:border-primary/30">
-            <div className="text-2xl font-bold text-primary">∞</div>
-            <div className="text-sm text-muted-foreground">Continuous Learning</div>
-          </div>
-        </motion.div>
+        {/* Minimalist Stats Bar */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-16">
+          {[
+            { label: "Domains", value: skillCategories.length },
+            { label: "Technologies", value: skillCategories.reduce((acc, cat) => acc + cat.skills.length, 0) },
+            { label: "Experience", value: "3+ Years" },
+            { label: "Learning", value: "Active" },
+          ].map((stat, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: i * 0.1 }}
+              className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-2xl p-5 text-center"
+            >
+              <div className="text-xl font-bold text-foreground">{stat.value}</div>
+              <div className="text-xs text-muted-foreground uppercase tracking-tight">{stat.label}</div>
+            </motion.div>
+          ))}
+        </div>
 
-        {/* Skills Grid */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="relative"
-        >
-          {/* Category Navigation */}
-          <div className="flex flex-wrap justify-center gap-3 mb-8">
+        {/* Category Filter - Mobile Scrollable */}
+        <div className="flex overflow-x-auto pb-4 mb-8 no-scrollbar -mx-4 px-4 md:mx-0 md:justify-center gap-2">
+          <button
+            onClick={() => setActiveCategory(null)}
+            className={`whitespace-nowrap px-5 py-2 rounded-full text-sm font-medium transition-all ${
+              activeCategory === null 
+              ? "bg-primary text-primary-foreground shadow-md" 
+              : "bg-secondary/50 text-muted-foreground hover:bg-secondary"
+            }`}
+          >
+            All Stack
+          </button>
+          {skillCategories.map((cat) => (
             <button
-              onClick={() => setActiveCategory(null)}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                activeCategory === null
-                  ? "bg-gradient-to-r from-primary to-primary/80 text-primary-foreground shadow-lg"
-                  : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
+              key={cat.name}
+              onClick={() => setActiveCategory(cat.name)}
+              className={`whitespace-nowrap px-5 py-2 rounded-full text-sm font-medium transition-all ${
+                activeCategory === cat.name 
+                ? "bg-primary text-primary-foreground shadow-md" 
+                : "bg-secondary/50 text-muted-foreground hover:bg-secondary"
               }`}
             >
-              All Categories
+              {cat.name}
             </button>
-            {skillCategories.map((category) => (
-              <button
-                key={category.name}
-                onClick={() => setActiveCategory(category.name)}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 flex items-center gap-2 ${
-                  activeCategory === category.name
-                    ? "bg-gradient-to-r from-primary to-primary/80 text-primary-foreground shadow-lg"
-                    : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
-                }`}
-              >
-                {category.icon && <category.icon className="h-4 w-4" />}
-                {category.name}
-              </button>
-            ))}
-          </div>
+          ))}
+        </div>
 
-          <AnimatePresence mode="wait">
-            <motion.div
-              layout
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-            >
+        {/* Smooth Grid Transition */}
+        <LayoutGroup>
+          <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <AnimatePresence mode="popLayout">
               {skillCategories
-                .filter(category => activeCategory === null || category.name === activeCategory)
+                .filter(c => !activeCategory || c.name === activeCategory)
                 .map((category, index) => (
-                  <motion.div
-                    key={category.name}
-                    layout
-                    initial="hidden"
-                    animate="visible"
-                    exit="hidden"
-                    variants={itemVariants}
-                    custom={index}
-                    whileHover={{ y: -5 }}
-                    className="h-full"
-                  >
-                    <SkillCategory 
-                      key={category.name} 
-                      category={category} 
-                      index={index}
-                      isActive={activeCategory === category.name || activeCategory === null}
-                    />
-                  </motion.div>
+                  <SkillCategory key={category.name} category={category} index={index} />
                 ))}
-            </motion.div>
-          </AnimatePresence>
-        </motion.div>
-
-        {/* Summary Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.8 }}
-          className="mt-20 mb-20"
-        >
-          <div className="bg-gradient-to-r from-primary/5 via-transparent to-primary/5 border-y py-16">
-            <div className="max-w-3xl mx-auto text-center px-4">
-              <div className="inline-flex items-center gap-3 mb-6">
-                <TrendingUp className="h-6 w-6 text-primary" />
-                <h3 className="text-xl font-semibold">Expertise Summary</h3>
-              </div>
-              
-              <div className="space-y-4 text-muted-foreground">
-                <p className="text-lg">
-                  With extensive experience across the full stack, I specialize in building scalable, 
-                  performant applications using modern technologies.
-                </p>
-                <p>
-                  My expertise spans from creating pixel-perfect UIs with React and TypeScript to 
-                  architecting robust backend systems with Node.js and cloud infrastructure.
-                </p>
-              </div>
-
-              <div className="mt-8 flex flex-wrap justify-center gap-4">
-                <div className="flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full">
-                  <Rocket className="h-4 w-4 text-primary" />
-                  <span className="text-sm font-medium">Full-Stack Development</span>
-                </div>
-                <div className="flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full">
-                  <span className="text-sm font-medium">Cloud Architecture</span>
-                </div>
-                <div className="flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full">
-                  <span className="text-sm font-medium">DevOps & CI/CD</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </motion.div>
+            </AnimatePresence>
+          </motion.div>
+        </LayoutGroup>
 
         {/* Learning Journey Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 1 }}
-        >
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-secondary/10 rounded-full mb-6">
-              <Sparkles className="h-4 w-4 text-secondary" />
-              <span className="text-sm font-medium text-secondary">Learning Path</span>
+        <div className="mt-32 pt-16 border-t border-border/50">
+          <div className="flex flex-col md:flex-row justify-between items-end gap-6 mb-12">
+            <div className="max-w-xl">
+              <h3 className="text-2xl font-bold mb-2">Learning Trajectory</h3>
+              <p className="text-muted-foreground">Detailed progression of my core competency paths.</p>
             </div>
             
-            <SectionHeading
-              title="Learning Journey"
-              subtitle="Explore the paths I've taken to master different technology stacks"
-              centered
-            />
-            
-            <p className="text-muted-foreground max-w-2xl mx-auto mt-4">
-              Each path represents a technology stack I've mastered, from initial learning 
-              through to advanced implementation and production experience.
-            </p>
+            {/* Bonus: Mastery Progress Bar */}
+            <div className="w-full md:w-64 space-y-2">
+              <div className="flex justify-between text-xs font-bold uppercase tracking-widest text-muted-foreground">
+                <span>Overall Mastery</span>
+                <span>{masteryPercentage}%</span>
+              </div>
+              <div className="h-1.5 w-full bg-secondary rounded-full overflow-hidden">
+                <motion.div 
+                  initial={{ width: 0 }}
+                  whileInView={{ width: `${masteryPercentage}%` }}
+                  transition={{ duration: 1, ease: "easeOut" }}
+                  className="h-full bg-primary"
+                />
+              </div>
+            </div>
           </div>
+          
+          <LearningJourney 
+            selectedPath={selectedPath} 
+            onPathSelect={setSelectedPath} 
+          />
+        </div>
 
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 1.2 }}
-            className="mt-12"
-          >
-            <LearningJourney 
-              onPathSelect={setSelectedPath} 
-              selectedPath={selectedPath}
-            />
-          </motion.div>
-        </motion.div>
-
-        {/* CTA Section */}
+        {/* Collaboration CTA */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 1.4 }}
-          className="mt-20 text-center"
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mt-32 bg-gradient-to-b from-card to-background border border-border/50 rounded-3xl p-8 md:p-12 text-center"
         >
-          <div className="bg-card border rounded-2xl p-8 shadow-sm max-w-3xl mx-auto">
-            <h3 className="text-xl font-bold mb-4">Ready to Build Something Amazing?</h3>
-            <p className="text-muted-foreground mb-6 max-w-xl mx-auto">
-              Let's discuss how my technical expertise can help bring your project to life.
-            </p>
-            <button className="px-8 py-3 bg-gradient-to-r from-primary to-primary/80 text-primary-foreground rounded-lg font-medium hover:shadow-lg transition-all duration-300 hover:scale-105">
-              Let's Collaborate
-            </button>
-          </div>
+          <h3 className="text-2xl md:text-3xl font-bold mb-4">Ready to build something next-gen?</h3>
+          <p className="text-muted-foreground max-w-xl mx-auto mb-8">
+            Currently open to full-stack opportunities and technical collaborations.
+          </p>
+          <button className="px-8 py-4 bg-primary text-primary-foreground rounded-xl font-bold hover:shadow-lg hover:shadow-primary/20 transition-all hover:-translate-y-1">
+            Get In Touch
+          </button>
         </motion.div>
       </div>
-
-      {/* Decorative Elements */}
-      <motion.div
-        animate={{ rotate: 360 }}
-        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-        className="absolute top-1/3 left-1/4 w-4 h-4 bg-primary/10 rounded-full hidden lg:block"
-      />
-      <motion.div
-        animate={{ rotate: -360 }}
-        transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-        className="absolute bottom-1/4 right-1/4 w-6 h-6 bg-secondary/10 rounded-full hidden lg:block"
-      />
     </div>
   )
 }
