@@ -205,7 +205,7 @@ export default function AboutPageClient() {
                 </div>
                 <div className="mt-6 flex flex-wrap gap-4">
                   <Button
-                    href="/VEMURIPRINCETARUN_Resume.pdf"
+                    href="/VEMURIPRINCETARUN_RESUME.pdf"
                     variant="primary"
                     className="group relative overflow-hidden"
                     download="VEMURI_PRINCE_TARUN_Resume.pdf"
