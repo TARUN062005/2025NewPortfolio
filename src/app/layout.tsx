@@ -10,7 +10,7 @@ import { Toaster } from "../components/Toast"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Tarun Vemuri | Full Stack Developer | React & Next.js",
+  title: "VEMURI PRINCE TARUN ",
   description:
     "Official portfolio of Tarun Vemuri, a Full Stack Developer specializing in React, Next.js, Node.js, and modern web technologies.",
   keywords: [
