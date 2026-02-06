@@ -87,7 +87,7 @@ export default function Home() {
               </h1>
 
               <h2 className="text-2xl sm:text-3xl font-semibold text-muted-foreground">
-                Full-Stack Software Engineer
+                Software Engineer
               </h2>
 
               <p className="text-lg sm:text-xl text-muted-foreground max-w-lg mx-auto lg:mx-0 leading-relaxed">
