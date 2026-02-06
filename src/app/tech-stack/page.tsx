@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import TechStackClient from "./TechStackClient"
 
 export const metadata: Metadata = {
-  title: "Tech Stack | Tarun - Full Stack Developer",
+  title: "Tech Stack | VEMURI PRINCE TARUN",
   description: "Explore Tarun's technical skills, programming languages, tools, and learning journey.",
 }
 
